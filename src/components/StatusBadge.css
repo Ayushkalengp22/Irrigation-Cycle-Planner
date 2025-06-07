@@ -1,0 +1,26 @@
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  text-align: center;
+}
+
+.green {
+  background-color: #34d399; /* Emerald green for 'Done' */
+  color: white;
+}
+
+.blue {
+  background-color: #3b82f6; /* Bright blue for 'In Progress' */
+  color: white;
+}
+
+.gray {
+  background-color: #94a3b8; /* Slate gray for 'Pending' */
+  color: white;
+}
