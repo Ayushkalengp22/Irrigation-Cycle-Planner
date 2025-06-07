@@ -638,3 +638,162 @@ body {
     padding: 1rem;
   }
 }
+
+/* Add these new styles to your existing app.css file */
+
+/* UPDATED CURRENT STATUS STYLES */
+.running-plots,
+.next-plots {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.running-info,
+.next-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.running-info {
+  border-left: 3px solid #fb923c;
+}
+
+.next-info {
+  border-left: 3px solid #60a5fa;
+}
+
+.plot-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.plot-details {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.no-activity {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-style: italic;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* PROGRESS BAR IN TABLE */
+.progress-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 120px;
+}
+
+.progress-bar-small {
+  flex: 1;
+  height: 0.5rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+  min-width: 60px;
+}
+
+.progress-fill-small {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+.progress-fill-small.pending {
+  background-color: #9ca3af;
+}
+
+.progress-fill-small.in-progress {
+  background: linear-gradient(90deg, #fb923c, #f97316);
+}
+
+.progress-fill-small.complete {
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+}
+
+.progress-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  min-width: 35px;
+  text-align: right;
+}
+
+/* RESPONSIVE UPDATES */
+@media (max-width: 768px) {
+  .running-plots,
+  .next-plots {
+    gap: 0.5rem;
+  }
+
+  .running-info,
+  .next-info {
+    padding: 0.5rem;
+  }
+
+  .progress-cell {
+    gap: 0.5rem;
+  }
+
+  .progress-bar-small {
+    min-width: 40px;
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    min-width: 30px;
+  }
+}
+
+/* ENHANCED HOVER EFFECTS */
+.running-info:hover,
+.next-info:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+/* BETTER VISUAL HIERARCHY */
+.status-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.status-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.status-value {
+  margin-left: 0;
+}
+
+/* IMPROVED PROGRESS BAR ANIMATIONS */
+.progress-fill-small.in-progress {
+  animation: progressPulse 2s infinite;
+}
+
+@keyframes progressPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}

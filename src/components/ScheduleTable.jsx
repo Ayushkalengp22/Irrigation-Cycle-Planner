@@ -13,6 +13,24 @@ const ScheduleTable = ({ data }) => {
     return "In Progress";
   };
 
+  const getProgress = (start, end) => {
+    const now = new Date();
+    const currentTime = now.getHours() * 100 + now.getMinutes();
+    const startTime = parseInt(start.slice(0, 4));
+    const endTime = parseInt(end.slice(0, 4));
+
+    if (currentTime < startTime) return 0; // Not started
+    if (currentTime > endTime) return 100; // Complete
+
+    // Calculate progress percentage for in-progress items
+    const totalDuration = endTime - startTime;
+    const elapsed = currentTime - startTime;
+    return Math.min(
+      100,
+      Math.max(0, Math.round((elapsed / totalDuration) * 100))
+    );
+  };
+
   const formatTime = (timeStr) => {
     const hours = timeStr.slice(0, 2);
     const minutes = timeStr.slice(2, 4);
@@ -56,35 +74,58 @@ const ScheduleTable = ({ data }) => {
               <th>End Time</th>
               <th>Motor</th>
               <th>Status</th>
+              <th>Progress</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((item, idx) => (
-              <tr key={item.index}>
-                <td>
-                  <div className="row-number">{idx + 1}</div>
-                </td>
-                <td>
-                  <div className="plot-name">{item.plot}</div>
-                </td>
-                <td>
-                  <div className="time-display">
-                    {formatTime(item.startTime)}
-                  </div>
-                </td>
-                <td>
-                  <div className="time-display">{formatTime(item.endTime)}</div>
-                </td>
-                <td>
-                  <div className="motor-badge">{item.runBy}</div>
-                </td>
-                <td>
-                  <StatusBadge
-                    status={getStatus(item.startTime, item.endTime)}
-                  />
-                </td>
-              </tr>
-            ))}
+            {data.map((item, idx) => {
+              const status = getStatus(item.startTime, item.endTime);
+              const progress = getProgress(item.startTime, item.endTime);
+
+              return (
+                <tr key={item.index}>
+                  <td>
+                    <div className="row-number">{idx + 1}</div>
+                  </td>
+                  <td>
+                    <div className="plot-name">{item.plot}</div>
+                  </td>
+                  <td>
+                    <div className="time-display">
+                      {formatTime(item.startTime)}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="time-display">
+                      {formatTime(item.endTime)}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="motor-badge">{item.runBy}</div>
+                  </td>
+                  <td>
+                    <StatusBadge status={status} />
+                  </td>
+                  <td>
+                    <div className="progress-cell">
+                      <div className="progress-bar-small">
+                        <div
+                          className={`progress-fill-small ${
+                            status === "Done"
+                              ? "complete"
+                              : status === "In Progress"
+                              ? "in-progress"
+                              : "pending"
+                          }`}
+                          style={{ width: `${progress}%` }}
+                        ></div>
+                      </div>
+                      <span className="progress-text">{progress}%</span>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

@@ -36,20 +36,19 @@ const SummaryDashboard = ({ data }) => {
     (item) => item.status === "In Progress"
   ).length;
 
-  // Find currently running plot
-  const currentlyRunning = scheduleWithStatus.find(
+  // Find currently running plots (multiple)
+  const currentlyRunning = scheduleWithStatus.filter(
     (item) => item.status === "In Progress"
   );
-
-  // Find next pending plot
-  const nextPending = scheduleWithStatus.find(
-    (item) => item.status === "Pending"
-  );
+  console.log(currentlyRunning, "currentlyRunning");
+  // Find next pending plots (multiple)
+  const nextPending = scheduleWithStatus
+    .filter((item) => item.status === "Pending")
+    .slice(0, 2);
 
   // Calculate completion percentage
   const completionPercentage =
     data.length > 0 ? Math.round((doneCount / data.length) * 100) : 0;
-
   return (
     <div className="summary-dashboard">
       <h2 className="summary-title">Schedule Overview</h2>
@@ -172,14 +171,17 @@ const SummaryDashboard = ({ data }) => {
               <span className="status-title">Currently Running</span>
             </div>
             <div className="status-value">
-              {currentlyRunning ? (
-                <div className="running-info">
-                  <span className="plot-name">{currentlyRunning.plot}</span>
-                  <span className="plot-details">
-                    {currentlyRunning.runBy} •{" "}
-                    {formatTime(currentlyRunning.startTime)} -{" "}
-                    {formatTime(currentlyRunning.endTime)}
-                  </span>
+              {currentlyRunning.length > 0 ? (
+                <div className="running-plots">
+                  {currentlyRunning.map((plot, index) => (
+                    <div key={plot.index} className="running-info">
+                      <span className="plot-name">{plot.plot}</span>
+                      <span className="plot-details">
+                        {plot.runBy} • {formatTime(plot.startTime)} -{" "}
+                        {formatTime(plot.endTime)}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               ) : (
                 <span className="no-activity">No active irrigation</span>
@@ -193,13 +195,16 @@ const SummaryDashboard = ({ data }) => {
               <span className="status-title">Up Next</span>
             </div>
             <div className="status-value">
-              {nextPending ? (
-                <div className="next-info">
-                  <span className="plot-name">{nextPending.plot}</span>
-                  <span className="plot-details">
-                    {nextPending.runBy} • Starts at{" "}
-                    {formatTime(nextPending.startTime)}
-                  </span>
+              {nextPending.length > 0 ? (
+                <div className="next-plots">
+                  {nextPending.map((plot, index) => (
+                    <div key={plot.index} className="next-info">
+                      <span className="plot-name">{plot.plot}</span>
+                      <span className="plot-details">
+                        {plot.runBy} • Starts at {formatTime(plot.startTime)}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               ) : (
                 <span className="no-activity">All cycles completed</span>
