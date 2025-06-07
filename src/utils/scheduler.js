@@ -36,24 +36,24 @@ export function generateSchedule({
   let timeCursor = start;
   let index = 0;
   const schedule = [];
-
+  let plotIndex = 0;
   while (timeCursor + runtime <= end) {
-    for (let batch = 0; batch < plots; batch += motors) {
-      for (let m = 0; m < motors; m++) {
-        const plot = batch + m;
-        if (plot >= plots) break;
-        const startTimeStr = minutesToTimeStr(timeCursor);
-        const endTimeStr = minutesToTimeStr(timeCursor + runtime);
-        schedule.push({
-          index: index++,
-          plot: `D${plot + 1}`,
-          startTime: startTimeStr,
-          endTime: endTimeStr,
-          runBy: `M${(m % motors) + 1}`,
-        });
-      }
-      timeCursor += cycleLength;
+    for (let m = 0; m < motors; m++) {
+      const plot = plotIndex % plots;
+      const startTimeStr = minutesToTimeStr(timeCursor);
+      const endTimeStr = minutesToTimeStr(timeCursor + runtime);
+
+      schedule.push({
+        index: index++,
+        plot: `D${plot + 1}`,
+        startTime: startTimeStr,
+        endTime: endTimeStr,
+        runBy: `M${m + 1}`,
+      });
+
+      plotIndex++;
     }
+    timeCursor += runtime + interval;
   }
 
   return schedule;

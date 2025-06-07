@@ -15,6 +15,12 @@ const InputForm = ({ onGenerate }) => {
   };
 
   const handleSubmit = () => {
+    const { plots, motors } = form;
+
+    if (parseInt(motors) > parseInt(plots)) {
+      alert("Number of plots must be less than or equal to number of motors.");
+      return;
+    }
     onGenerate(form);
   };
 

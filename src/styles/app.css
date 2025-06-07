@@ -1,4 +1,3 @@
-/* GLOBAL RESET + BODY */
 * {
   margin: 0;
   padding: 0;
@@ -23,7 +22,6 @@ body {
   margin: 0 auto;
 }
 
-/* HEADER STYLES */
 .app-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -58,7 +56,6 @@ body {
   color: #6b7280;
 }
 
-/* INPUT FORM STYLES */
 .input-form-container {
   background: white;
   border-radius: 1rem;
@@ -145,7 +142,6 @@ body {
   box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
 }
 
-/* TABLE STYLES */
 .table-container {
   background: white;
   border-radius: 1rem;
@@ -287,7 +283,6 @@ body {
   border: 1px solid #d8b4fe;
 }
 
-/* STATUS BADGE STYLES */
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -341,7 +336,6 @@ body {
   background-color: #9ca3af;
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   .app-container {
     padding: 1rem 0.5rem;
@@ -369,9 +363,6 @@ body {
   }
 }
 
-/* Add these styles to your existing src/styles/app.css file */
-
-/* SUMMARY DASHBOARD STYLES */
 .summary-dashboard {
   background: white;
   border-radius: 1rem;
@@ -388,7 +379,6 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* PROGRESS BAR */
 .progress-section {
   margin-bottom: 2rem;
 }
@@ -427,7 +417,6 @@ body {
   transition: width 0.5s ease;
 }
 
-/* STATISTICS GRID */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -602,7 +591,6 @@ body {
   font-style: italic;
 }
 
-/* RESPONSIVE DESIGN FOR SUMMARY */
 @media (max-width: 768px) {
   .summary-dashboard {
     padding: 1.5rem;
@@ -639,9 +627,6 @@ body {
   }
 }
 
-/* Add these new styles to your existing app.css file */
-
-/* UPDATED CURRENT STATUS STYLES */
 .running-plots,
 .next-plots {
   display: flex;
@@ -687,7 +672,6 @@ body {
   text-align: center;
 }
 
-/* PROGRESS BAR IN TABLE */
 .progress-cell {
   display: flex;
   align-items: center;
@@ -730,7 +714,6 @@ body {
   text-align: right;
 }
 
-/* RESPONSIVE UPDATES */
 @media (max-width: 768px) {
   .running-plots,
   .next-plots {
@@ -756,7 +739,6 @@ body {
   }
 }
 
-/* ENHANCED HOVER EFFECTS */
 .running-info:hover,
 .next-info:hover {
   background-color: rgba(255, 255, 255, 0.8);
@@ -765,7 +747,6 @@ body {
   transition: all 0.2s ease;
 }
 
-/* BETTER VISUAL HIERARCHY */
 .status-item {
   display: flex;
   flex-direction: column;
@@ -783,7 +764,6 @@ body {
   margin-left: 0;
 }
 
-/* IMPROVED PROGRESS BAR ANIMATIONS */
 .progress-fill-small.in-progress {
   animation: progressPulse 2s infinite;
 }
@@ -796,4 +776,43 @@ body {
   50% {
     opacity: 0.8;
   }
+}
+
+.filter-bar {
+  margin: 1.2rem 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  /* background-color: #f9fafb; */
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.filter-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.filter-select {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #111827;
+  outline: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filter-select:hover {
+  border-color: #3b82f6;
+}
+
+.filter-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
 }

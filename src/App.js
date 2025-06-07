@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputForm from "./components/InputForm";
 import SummaryDashboard from "./components/SummaryDashboard";
 import ScheduleTable from "./components/ScheduleTable";
@@ -8,6 +8,16 @@ import "./styles/app.css";
 
 function App() {
   const [schedule, setSchedule] = useState([]);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // 🔄 Automatically update the current time every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 10000); // 30,000ms = 30 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, []);
 
   const handleGenerate = (inputs) => {
     const newSchedule = generateSchedule(inputs);
@@ -46,8 +56,8 @@ function App() {
         {/* Summary Dashboard */}
         <SummaryDashboard data={schedule} />
 
-        {/* Schedule Table */}
-        <ScheduleTable data={schedule} />
+        {/* Schedule Table with current time prop */}
+        <ScheduleTable data={schedule} currentTime={currentTime} />
       </div>
     </div>
   );

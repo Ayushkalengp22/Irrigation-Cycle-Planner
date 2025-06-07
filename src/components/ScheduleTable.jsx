@@ -1,30 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import StatusBadge from "./StatusBadge";
 
-const ScheduleTable = ({ data }) => {
+const ScheduleTable = ({ data, currentTime }) => {
+  const [statusFilter, setStatusFilter] = useState("All");
+
   const getStatus = (start, end) => {
-    const now = new Date();
-    const currentTime = now.getHours() * 100 + now.getMinutes();
+    const current = currentTime.getHours() * 100 + currentTime.getMinutes();
     const startTime = parseInt(start.slice(0, 4));
     const endTime = parseInt(end.slice(0, 4));
 
-    if (currentTime < startTime) return "Pending";
-    if (currentTime > endTime) return "Done";
+    if (current < startTime) return "Pending";
+    if (current > endTime) return "Done";
     return "In Progress";
   };
 
   const getProgress = (start, end) => {
-    const now = new Date();
-    const currentTime = now.getHours() * 100 + now.getMinutes();
+    const current = currentTime.getHours() * 100 + currentTime.getMinutes();
     const startTime = parseInt(start.slice(0, 4));
     const endTime = parseInt(end.slice(0, 4));
 
-    if (currentTime < startTime) return 0; // Not started
-    if (currentTime > endTime) return 100; // Complete
+    if (current < startTime) return 0;
+    if (current > endTime) return 100;
 
-    // Calculate progress percentage for in-progress items
     const totalDuration = endTime - startTime;
-    const elapsed = currentTime - startTime;
+    const elapsed = current - startTime;
     return Math.min(
       100,
       Math.max(0, Math.round((elapsed / totalDuration) * 100))
@@ -39,15 +38,21 @@ const ScheduleTable = ({ data }) => {
 
   if (data.length === 0) return null;
 
+  const filteredData = data.filter((item) => {
+    const status = getStatus(item.startTime, item.endTime);
+    return statusFilter === "All" || status === statusFilter;
+  });
+
   return (
     <div className="table-container">
       <div className="table-header">
         <div className="table-info">
           <h2 className="table-title">Irrigation Schedule</h2>
           <p className="table-subtitle">
-            Total: {data.length} irrigation cycles
+            Total: {filteredData.length} irrigation cycles (filtered)
           </p>
         </div>
+
         <div className="status-legend">
           <div className="legend-item">
             <div className="legend-dot pending-dot"></div>
@@ -64,6 +69,24 @@ const ScheduleTable = ({ data }) => {
         </div>
       </div>
 
+      {/* Filter Dropdown */}
+      <div className="filter-bar">
+        <label htmlFor="statusFilter" className="filter-label">
+          Filter by Status:
+        </label>
+        <select
+          id="statusFilter"
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="filter-select"
+        >
+          <option value="All">All</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+        </select>
+      </div>
+
       <div className="table-wrapper">
         <table className="schedule-table">
           <thead>
@@ -78,7 +101,7 @@ const ScheduleTable = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, idx) => {
+            {filteredData.map((item, idx) => {
               const status = getStatus(item.startTime, item.endTime);
               const progress = getProgress(item.startTime, item.endTime);
 

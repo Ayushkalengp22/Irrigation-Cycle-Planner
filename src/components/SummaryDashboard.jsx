@@ -41,10 +41,14 @@ const SummaryDashboard = ({ data }) => {
     (item) => item.status === "In Progress"
   );
   console.log(currentlyRunning, "currentlyRunning");
+  const motorCount =
+    data.length > 0
+      ? Math.max(...data.map((item) => parseInt(item.runBy.replace("M", ""))))
+      : 0;
   // Find next pending plots (multiple)
   const nextPending = scheduleWithStatus
     .filter((item) => item.status === "Pending")
-    .slice(0, 2);
+    .slice(0, motorCount);
 
   // Calculate completion percentage
   const completionPercentage =
