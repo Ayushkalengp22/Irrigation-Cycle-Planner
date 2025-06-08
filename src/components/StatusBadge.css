@@ -11,16 +11,16 @@
 }
 
 .green {
-  background-color: #34d399; /* Emerald green for 'Done' */
+  background-color: #34d399;
   color: white;
 }
 
 .blue {
-  background-color: #3b82f6; /* Bright blue for 'In Progress' */
+  background-color: #3b82f6;
   color: white;
 }
 
 .gray {
-  background-color: #94a3b8; /* Slate gray for 'Pending' */
+  background-color: #94a3b8;
   color: white;
 }

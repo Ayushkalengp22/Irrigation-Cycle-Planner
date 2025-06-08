@@ -20,7 +20,6 @@ const SummaryDashboard = ({ data }) => {
     return `${hours}:${minutes}`;
   };
 
-  // Calculate statistics
   const scheduleWithStatus = data.map((item) => ({
     ...item,
     status: getStatus(item.startTime, item.endTime),
@@ -36,7 +35,6 @@ const SummaryDashboard = ({ data }) => {
     (item) => item.status === "In Progress"
   ).length;
 
-  // Find currently running plots (multiple)
   const currentlyRunning = scheduleWithStatus.filter(
     (item) => item.status === "In Progress"
   );
@@ -45,19 +43,17 @@ const SummaryDashboard = ({ data }) => {
     data.length > 0
       ? Math.max(...data.map((item) => parseInt(item.runBy.replace("M", ""))))
       : 0;
-  // Find next pending plots (multiple)
+
   const nextPending = scheduleWithStatus
     .filter((item) => item.status === "Pending")
     .slice(0, motorCount);
 
-  // Calculate completion percentage
   const completionPercentage =
     data.length > 0 ? Math.round((doneCount / data.length) * 100) : 0;
   return (
     <div className="summary-dashboard">
       <h2 className="summary-title">Schedule Overview</h2>
 
-      {/* Progress Bar */}
       <div className="progress-section">
         <div className="progress-header">
           <span className="progress-label">Overall Progress</span>
@@ -71,9 +67,7 @@ const SummaryDashboard = ({ data }) => {
         </div>
       </div>
 
-      {/* Statistics Grid */}
       <div className="stats-grid">
-        {/* Total Cycles */}
         <div className="stat-card total">
           <div className="stat-icon">
             <svg
@@ -96,7 +90,6 @@ const SummaryDashboard = ({ data }) => {
           </div>
         </div>
 
-        {/* Done */}
         <div className="stat-card done">
           <div className="stat-icon">
             <svg
@@ -119,7 +112,6 @@ const SummaryDashboard = ({ data }) => {
           </div>
         </div>
 
-        {/* In Progress */}
         <div className="stat-card progress">
           <div className="stat-icon">
             <svg
@@ -142,7 +134,6 @@ const SummaryDashboard = ({ data }) => {
           </div>
         </div>
 
-        {/* Pending */}
         <div className="stat-card pending">
           <div className="stat-icon">
             <svg
@@ -166,7 +157,6 @@ const SummaryDashboard = ({ data }) => {
         </div>
       </div>
 
-      {/* Current Status */}
       <div className="current-status">
         <div className="status-row">
           <div className="status-item">
