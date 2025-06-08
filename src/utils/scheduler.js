@@ -31,7 +31,7 @@ export function generateSchedule({
 
   const start = timeToMinutes(parseTime(startTime));
   const end = timeToMinutes(parseTime(endTime));
-  const cycleLength = runtime + interval;
+  //   const cycleLength = runtime + interval;
 
   let timeCursor = start;
   let index = 0;
